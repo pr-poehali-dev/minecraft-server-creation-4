@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -132,6 +132,7 @@ export default function Index() {
   const [cart, setCart] = useState<any[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [purchaseNickname, setPurchaseNickname] = useState('');
+  const [onlinePlayers, setOnlinePlayers] = useState(127);
   const { toast } = useToast();
   const serverIP = 'RoomTimeServ.mc-join.me';
 
@@ -214,16 +215,27 @@ export default function Index() {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOnlinePlayers(prev => {
+        const change = Math.floor(Math.random() * 5) - 2;
+        const newValue = prev + change;
+        return Math.max(100, Math.min(150, newValue));
+      });
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#1a0f2e] to-[#0a0a0a] relative">
       <div 
-        className="fixed inset-0 z-0 opacity-20"
+        className="fixed inset-0 z-0 opacity-30"
         style={{
-          backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/642c7259-1ac2-4afe-a8e4-f71e4ee13c13.jpg)',
+          backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/ec925d24-f44b-4bb1-b3bf-afcc27ddc170.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(4px)'
+          filter: 'blur(3px)'
         }}
       />
       <div className="relative z-10">
@@ -322,21 +334,42 @@ export default function Index() {
             <h2 className="text-4xl md:text-6xl lg:text-7xl mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent leading-tight">
               ROOMTIMESERV
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-4">
               Лучший Minecraft сервер для настоящих геймеров
             </p>
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <Badge className="bg-accent/20 text-accent border border-accent px-4 py-2 text-sm animate-pulse">
+                <Icon name="Star" className="mr-1" size={14} />
+                При поддержке Lololoshka & FixPlay
+              </Badge>
+            </div>
           </div>
 
-          <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/50 pixel-corners p-6 md:p-8 mb-8 hover:border-primary transition-all animate-scale-in">
-            <div className="flex flex-col items-center gap-4">
-              <Badge className="text-sm md:text-base px-4 py-2 bg-secondary">IP сервера</Badge>
-              <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary break-all">
-                {serverIP}
-              </p>
-              <Button onClick={copyIP} size="lg" className="animate-pulse-glow">
-                <Icon name="Copy" className="mr-2" size={20} />
-                Скопировать IP
-              </Button>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div className="bg-card/50 backdrop-blur-sm border-2 border-primary/50 pixel-corners p-6 hover:border-primary transition-all animate-scale-in">
+              <div className="flex flex-col items-center gap-4">
+                <Badge className="text-sm md:text-base px-4 py-2 bg-secondary">IP сервера</Badge>
+                <p className="text-2xl md:text-3xl font-bold text-primary break-all">
+                  {serverIP}
+                </p>
+                <Button onClick={copyIP} size="lg" className="animate-pulse-glow w-full">
+                  <Icon name="Copy" className="mr-2" size={20} />
+                  Скопировать IP
+                </Button>
+              </div>
+            </div>
+
+            <div className="bg-card/50 backdrop-blur-sm border-2 border-accent/50 pixel-corners p-6 hover:border-accent transition-all animate-scale-in">
+              <div className="flex flex-col items-center gap-4">
+                <Badge className="text-sm md:text-base px-4 py-2 bg-accent">Онлайн сейчас</Badge>
+                <div className="flex items-baseline gap-2">
+                  <p className="text-4xl md:text-5xl font-bold text-accent animate-pulse">
+                    {onlinePlayers}
+                  </p>
+                  <Icon name="Users" className="text-accent" size={32} />
+                </div>
+                <p className="text-sm text-muted-foreground">игроков на сервере</p>
+              </div>
             </div>
           </div>
 
@@ -378,15 +411,16 @@ export default function Index() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
             {[
-              { icon: 'Users', label: 'Онлайн 24/7' },
-              { icon: 'Zap', label: 'Без лагов' },
-              { icon: 'Shield', label: 'Защита от читов' },
-              { icon: 'Gift', label: 'Ежедневные ивенты' }
+              { icon: 'Users', label: 'Онлайн 24/7', value: '24/7' },
+              { icon: 'Zap', label: 'Без лагов', value: '0ms' },
+              { icon: 'Shield', label: 'Защита от читов', value: '100%' },
+              { icon: 'Clock', label: 'Работаем', value: '2+ года' }
             ].map((item, idx) => (
               <Card key={idx} className="bg-card/30 border-primary/30 hover:border-primary transition-all hover:scale-105 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
                 <CardContent className="p-4 text-center">
                   <Icon name={item.icon as any} className="mx-auto mb-2 text-primary" size={32} />
-                  <p className="text-sm font-bold">{item.label}</p>
+                  <p className="text-2xl font-bold text-accent mb-1">{item.value}</p>
+                  <p className="text-xs text-muted-foreground">{item.label}</p>
                 </CardContent>
               </Card>
             ))}
