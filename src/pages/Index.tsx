@@ -330,21 +330,32 @@ export default function Index() {
 
       <section id="main" className="min-h-screen flex items-center justify-center pt-20 px-4 relative overflow-hidden">
         <div 
-          className="absolute left-10 top-1/2 -translate-y-1/2 w-80 h-96 opacity-20 pointer-events-none select-none"
+          className="absolute left-10 top-1/2 -translate-y-1/2 w-64 h-96 opacity-25 pointer-events-none select-none animate-float"
           style={{
-            backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/fe2c644e-7c50-4df9-8255-d8c752d00c7a.jpg)',
-            backgroundSize: 'cover',
+            backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/45839447-8987-46b0-9562-f737c98f9064.jpg)',
+            backgroundSize: 'contain',
             backgroundPosition: 'center',
-            filter: 'brightness(0.7)'
+            backgroundRepeat: 'no-repeat'
           }}
         />
         <div 
-          className="absolute right-10 top-1/2 -translate-y-1/2 w-96 h-[28rem] opacity-30 pointer-events-none select-none"
+          className="absolute left-1/2 -translate-x-1/2 top-20 w-56 h-80 opacity-20 pointer-events-none select-none animate-float"
           style={{
-            backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/8dfb5e30-d579-4a46-9509-b727255a9167.jpg)',
-            backgroundSize: 'cover',
+            backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/f32b9805-4a18-429a-9c9f-9e19528a0822.jpg)',
+            backgroundSize: 'contain',
             backgroundPosition: 'center',
-            filter: 'brightness(0.6) contrast(1.2)'
+            backgroundRepeat: 'no-repeat',
+            animationDelay: '1s'
+          }}
+        />
+        <div 
+          className="absolute right-10 top-1/2 -translate-y-1/2 w-72 h-[30rem] opacity-30 pointer-events-none select-none animate-float"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/bdc4c47a-3139-496b-a3a2-fba21fa95687.jpg)',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            animationDelay: '2s'
           }}
         />
         <div className="absolute top-20 left-10 text-6xl animate-float opacity-50">⛏️</div>
