@@ -227,17 +227,7 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#1a0f2e] to-[#0a0a0a] relative">
-      <div 
-        className="fixed inset-0 z-0 opacity-40"
-        style={{
-          backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/f570c8ca-3676-4d9e-8b01-08bbe6176ab3.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          filter: 'blur(1px) brightness(0.7)'
-        }}
-      />
+    <div className="min-h-screen bg-black relative">
       <div className="relative z-10">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b-2 border-primary/30">
         <div className="container mx-auto px-4 py-4">
