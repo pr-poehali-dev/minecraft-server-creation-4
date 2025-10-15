@@ -4,33 +4,103 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import Icon from '@/components/ui/icon';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const privileges = [
-  { name: 'Барон', price: 10, features: ['Префикс [Барон]', 'Доступ к /kit baron', '2 дома'] },
-  { name: 'Страж', price: 16, features: ['Префикс [Страж]', 'Доступ к /kit guard', '3 дома', 'Цветной ник'] },
-  { name: 'Герой', price: 24, features: ['Префикс [Герой]', 'Доступ к /kit hero', '4 дома', 'Полёт в лобби'] },
-  { name: 'Аспид', price: 56, features: ['Префикс [Аспид]', 'Доступ к /kit aspid', '6 домов', '/hat'] },
-  { name: 'Сквид', price: 69, features: ['Префикс [Сквид]', 'Доступ к /kit squid', '8 домов', '/nick'] },
-  { name: 'Глава', price: 87, features: ['Префикс [Глава]', 'Доступ к /kit chief', '10 домов', '/glow'] },
-  { name: 'Элита', price: 149, features: ['Префикс [Элита]', 'Доступ к /kit elite', '12 домов', '/workbench'] },
-  { name: 'Титан', price: 239, features: ['Префикс [Титан]', 'Доступ к /kit titan', '15 домов', '/fix'] },
-  { name: 'Принц', price: 329, features: ['Префикс [Принц]', 'Доступ к /kit prince', '20 домов', '/ec'] },
-  { name: 'Князь', price: 449, features: ['Префикс [Князь]', 'Доступ к /kit duke', '25 домов', '/fly'] },
-  { name: 'Герцог', price: 699, features: ['Префикс [Герцог]', 'Доступ к /kit grand', '30 домов', '/god'] },
-  { name: 'Спонсор', price: 850, features: ['Префикс [Спонсор]', 'Все киты', '50 домов', 'Все возможности'] }
+  { 
+    name: 'Барон', 
+    price: 10, 
+    commands: ['/kit Барон', '/salary', '/crawl'],
+    features: ['Префикс [Барон] в чате и табе', '2 точки домов', '2 региона по 40,000 блоков', '6 слотов на аукционе', 'Задержка телепорта 7 сек']
+  },
+  { 
+    name: 'Страж', 
+    price: 16, 
+    commands: ['/kit Страж', '/suicide', '/dchat'],
+    features: ['Префикс [Страж] в чате и табе', '2 точки домов', '2 региона по 45,000 блоков', '7 слотов на аукционе', 'Задержка телепорта 6 сек', '✔ Возможности Барона']
+  },
+  { 
+    name: 'Герой', 
+    price: 24, 
+    commands: ['/kit Герой'],
+    features: ['Префикс [Герой] в чате и табе', 'Все возможности Стража', 'Дополнительные бонусы']
+  },
+  { 
+    name: 'Аспид', 
+    price: 56, 
+    commands: ['/kit Аспид', '/clear', '/feed', '/heal', '/me'],
+    features: ['Префикс [Аспид] в чате и табе', '2 точки домов', '2 региона по 60,000 блоков', '9 слотов на аукционе', 'Задержка телепорта 6 сек', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Сквид', 
+    price: 69, 
+    commands: ['/kit Сквид', '/back', '/ec', '/wbench', '/ad', '/buy', '/sell', '/name'],
+    features: ['Префикс [Сквид] в чате и табе', '3 точки домов', '3 региона по 75,000 блоков', '10 слотов на аукционе', 'Задержка телепорта 5 сек', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Глава', 
+    price: 87, 
+    commands: ['/kit Глава', '/salary', '/bc', '/ext', '/am toggle', '/msgtoggle', '/paytoggle', '/tptoggle', '/feed Ник', '/heal Ник', '/exp'],
+    features: ['Префикс [Глава] в чате и табе', '3 точки домов', '4 региона по 100,000 блоков', '11 слотов на аукционе', 'Задержка телепорта 4 сек', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Элита', 
+    price: 149, 
+    commands: ['/kit Элита', '/time', '/weather', '/loom', '/carttable', '/beezooka', '/kittycannon', '/firework', '/name (цветной)'],
+    features: ['Префикс [Элита] в чате и табе', '3 точки домов', '5 регионов по 150,000 блоков', '12 слотов на аукционе', 'Задержка телепорта 4 сек', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Титан', 
+    price: 239, 
+    commands: ['/kit Титан', '/jump', '/afk', '/setwarp', '/delwarp', '/repair'],
+    features: ['Префикс [Титан] в чате и табе', '4 точки домов', '6 регионов по 200,000 блоков', '13 слотов на аукционе', 'Задержка телепорта 3 сек', 'Не кикает за АФК', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Принц', 
+    price: 329, 
+    commands: ['/kit Принц', '/smithtable', '/stonecutter', '/grindstone'],
+    features: ['Префикс [Принц] в чате и табе', '5 точек домов', '7 регионов по 250,000 блоков', '14 слотов на аукционе', 'Задержка телепорта 3 сек', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Князь', 
+    price: 449, 
+    commands: ['/kit Князь', '/fly', '/amute', '/enchant', '/anvil', '/speed', '/salary', '/exp'],
+    features: ['Префикс [Князь] в чате и табе', '7 точек домов', '10 регионов по 350,000 блоков', '15 слотов на аукционе', 'Задержка телепорта 2 сек', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Герцог', 
+    price: 699, 
+    commands: ['/kit Крушитель', '/enchant', '/anvil', '/speed', '/salary', '/exp'],
+    features: ['Префикс [Герцог] в чате и табе', '10 точек домов', '15 регионов по 500,000 блоков', '15 слотов на аукционе', 'Вход на заполненный сервер', 'Нет задержки телепортации', '✔ Возможности привилегий ниже']
+  },
+  { 
+    name: 'Спонсор', 
+    price: 850, 
+    commands: ['Все команды сервера'],
+    features: ['Префикс [Спонсор] в чате и табе', 'Все киты сервера', '50 точек домов', 'Максимальные регионы', 'Все возможности сервера', 'VIP поддержка']
+  }
+];
+
+const extraItems = [
+  { name: 'Донат-кейс', price: 60, description: 'Случайные ценные предметы', icon: 'Gift' },
+  { name: '1000 токенов', price: 2, description: 'Внутриигровая валюта', icon: 'Coins' }
 ];
 
 const reviews = [
+  { name: 'Lololoshka', text: 'Один из лучших серверов, на которых я играл! Отличная работа команды 🎮', rating: 5, sponsor: true },
+  { name: 'FixPlay', text: 'Рекомендую всем своим подписчикам! Стабильный, интересный сервер с крутыми ивентами 🔥', rating: 5, sponsor: true },
+  { name: 'OneTwo', text: 'Играю регулярно с друзьями. Админы молодцы, сервер топ! 💎', rating: 5, sponsor: true },
   { name: 'Максим_228', text: 'Лучший сервер! Админы адекватные, онлайн огонь 🔥', rating: 5 },
   { name: 'ProGamer2024', text: 'Играю уже полгода, купил Титана - не пожалел! Донат окупается', rating: 5 },
   { name: 'КристинаМайнкрафт', text: 'Очень крутые ивенты и конкурсы, выиграла привилегию!', rating: 5 },
   { name: 'ShadowNinja', text: 'Топовая экономика, нет читеров, поддержка быстро отвечает', rating: 5 },
   { name: 'BuilderPro', text: 'Играю с друзьями, создали свою гильдию. Сервер просто бомба!', rating: 5 },
   { name: 'DiamondHunter', text: 'Стабильный онлайн, нет лагов. Рекомендую всем!', rating: 5 },
-  { name: 'RedstoneKing', text: 'Уникальные режимы игры, постоянные обновления. Красавцы!', rating: 5 },
-  { name: 'MegaSteve', text: 'Купил привилегию Герцог - вау! Столько возможностей!', rating: 5 },
-  { name: 'CraftyGirl', text: 'Дружное комьюнити, всегда помогут новичкам ❤️', rating: 5 },
-  { name: 'EpicMiner2025', text: 'Зашёл попробовать - остался навсегда. Лучший сервер!', rating: 5 }
+  { name: 'RedstoneKing', text: 'Уникальные режимы игры, постоянные обновления. Красавцы!', rating: 5 }
 ];
 
 const rules = [
@@ -41,11 +111,27 @@ const rules = [
   'Запрещена продажа игровых ценностей за реальные деньги',
   'Уважайте администрацию и соблюдайте их указания',
   'Запрещено создание ловушек на спавне',
-  'Багоюз и дюп запрещены и караются баном'
+  'Багоюз и дюп запрещены и караются баном',
+  'Попытки махинаций оплатами наказываются баном без возврата средств',
+  'Предоставьте чек оплаты при проблемах с донатом'
+];
+
+const antiCheatPrograms = [
+  { name: 'SystemInformer', desc: 'Позволяет залезть в память устройства и свойства процессов' },
+  { name: 'USB-DriveLog', desc: 'Отслеживание присоединения/отключения USB флешек' },
+  { name: 'USB-Deview', desc: 'Отслеживание присоединения/отключения USB устройств' },
+  { name: 'ExecutedProgramsList', desc: 'Поиск и анализ ранее запускавшихся приложений' },
+  { name: 'WinPrefetchView', desc: 'Подробный анализ папки Prefetch для поиска читов' },
+  { name: 'LastActivityView', desc: 'Анализ активности ПК для поиска читов' },
+  { name: 'CachedProgramsList', desc: 'Поиск информации о запускавшихся файлах' },
+  { name: 'OpenSaveFilesView', desc: 'Поиск информации о запускавшихся файлах в памяти' }
 ];
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('main');
+  const [cart, setCart] = useState<any[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [purchaseNickname, setPurchaseNickname] = useState('');
   const { toast } = useToast();
   const serverIP = 'RoomTimeServ.mc-join.me';
 
@@ -55,6 +141,49 @@ export default function Index() {
       title: '✅ IP скопирован!',
       description: 'Можешь подключаться к серверу',
     });
+  };
+
+  const addToCart = (item: any) => {
+    setCart([...cart, item]);
+    toast({
+      title: '✅ Добавлено в корзину!',
+      description: `${item.name} добавлен в корзину`,
+    });
+  };
+
+  const removeFromCart = (index: number) => {
+    const newCart = cart.filter((_, i) => i !== index);
+    setCart(newCart);
+  };
+
+  const getTotalPrice = () => {
+    return cart.reduce((sum, item) => sum + item.price, 0);
+  };
+
+  const handlePurchase = async () => {
+    if (!purchaseNickname.trim()) {
+      toast({
+        title: '❌ Ошибка',
+        description: 'Введите ваш никнейм',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    const message = `🛒 Новая покупка!\n\nНикнейм: ${purchaseNickname}\nТовары:\n${cart.map(item => `- ${item.name} (${item.price}₽)`).join('\n')}\n\nИтого: ${getTotalPrice()}₽`;
+    
+    const telegramUrl = `https://t.me/KarpovST1M`;
+    window.open(telegramUrl, '_blank');
+    
+    toast({
+      title: '✅ Заказ оформлен!',
+      description: 'Свяжитесь с @KarpovST1M в Telegram для оплаты',
+    });
+    
+    console.log(message);
+    setCart([]);
+    setPurchaseNickname('');
+    setCartOpen(false);
   };
 
   const scrollToSection = (section: string) => {
@@ -71,7 +200,7 @@ export default function Index() {
             <h1 className="text-xl md:text-2xl text-primary animate-pulse-glow">
               ROOMTIMESERV
             </h1>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 items-center">
               {['main', 'privileges', 'reviews', 'promo', 'support', 'rules'].map((section) => (
                 <Button
                   key={section}
@@ -88,6 +217,67 @@ export default function Index() {
                   {section === 'rules' && 'Правила'}
                 </Button>
               ))}
+              <Sheet open={cartOpen} onOpenChange={setCartOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm" className="relative pixel-corners">
+                    <Icon name="ShoppingCart" size={18} />
+                    {cart.length > 0 && (
+                      <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-accent">
+                        {cart.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="bg-card/95 backdrop-blur-md border-primary/30">
+                  <SheetHeader>
+                    <SheetTitle className="text-primary">Корзина</SheetTitle>
+                    <SheetDescription>
+                      {cart.length === 0 ? 'Корзина пуста' : `Товаров: ${cart.length}`}
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-4">
+                    {cart.map((item, idx) => (
+                      <div key={idx} className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-primary/20">
+                        <div>
+                          <p className="font-bold text-primary">{item.name}</p>
+                          <p className="text-sm text-muted-foreground">{item.price}₽</p>
+                        </div>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => removeFromCart(idx)}
+                        >
+                          <Icon name="Trash2" size={16} />
+                        </Button>
+                      </div>
+                    ))}
+                    {cart.length > 0 && (
+                      <div className="space-y-4 pt-4 border-t border-primary/20">
+                        <div className="flex justify-between text-lg font-bold">
+                          <span>Итого:</span>
+                          <span className="text-primary">{getTotalPrice()}₽</span>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="nickname">Ваш никнейм в Minecraft</Label>
+                          <Input
+                            id="nickname"
+                            placeholder="Введите ник"
+                            value={purchaseNickname}
+                            onChange={(e) => setPurchaseNickname(e.target.value)}
+                            className="bg-background/50 border-primary/30"
+                          />
+                        </div>
+                        <Button
+                          className="w-full animate-pulse-glow"
+                          onClick={handlePurchase}
+                        >
+                          Оформить заказ
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
@@ -173,8 +363,9 @@ export default function Index() {
 
       <section id="privileges" className="min-h-screen py-20 px-4">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-5xl text-center mb-12 text-primary">Привилегии</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <h2 className="text-3xl md:text-5xl text-center mb-12 text-primary">Привилегии и товары</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             {privileges.map((priv, idx) => (
               <Card
                 key={idx}
@@ -187,38 +378,96 @@ export default function Index() {
                     <Badge className="bg-accent text-accent-foreground">{priv.price}₽</Badge>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {priv.features.map((feature, fIdx) => (
-                      <li key={fIdx} className="flex items-start gap-2 text-sm">
-                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={16} />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button className="w-full mt-4 animate-pulse-glow" size="sm">
-                    Купить
+                <CardContent className="space-y-4">
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-2 font-bold">Команды:</p>
+                    <div className="space-y-1">
+                      {priv.commands.map((cmd, cIdx) => (
+                        <code key={cIdx} className="block text-xs bg-background/50 p-1 rounded text-primary">
+                          {cmd}
+                        </code>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-2 font-bold">Возможности:</p>
+                    <ul className="space-y-1">
+                      {priv.features.map((feature, fIdx) => (
+                        <li key={fIdx} className="flex items-start gap-2 text-xs">
+                          <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={12} />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <Button 
+                    className="w-full animate-pulse-glow" 
+                    size="sm"
+                    onClick={() => addToCart({ name: priv.name, price: priv.price, type: 'privilege' })}
+                  >
+                    <Icon name="ShoppingCart" className="mr-2" size={16} />
+                    В корзину
                   </Button>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <h3 className="text-2xl md:text-3xl text-center mb-6 text-secondary">Дополнительные товары</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {extraItems.map((item, idx) => (
+                <Card
+                  key={idx}
+                  className="bg-gradient-to-br from-accent/20 to-secondary/20 border-2 border-accent/50 hover:border-accent transition-all hover:scale-105 pixel-corners animate-fade-in"
+                >
+                  <CardHeader>
+                    <div className="flex items-center gap-4">
+                      <Icon name={item.icon as any} className="text-accent" size={40} />
+                      <div className="flex-1">
+                        <CardTitle className="text-xl text-primary">{item.name}</CardTitle>
+                        <CardDescription>{item.description}</CardDescription>
+                      </div>
+                      <Badge className="bg-accent text-accent-foreground text-lg">{item.price}₽</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      className="w-full animate-pulse-glow" 
+                      onClick={() => addToCart({ name: item.name, price: item.price, type: 'extra' })}
+                    >
+                      <Icon name="ShoppingCart" className="mr-2" size={16} />
+                      В корзину
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <p className="text-center text-muted-foreground mt-4 text-sm">
+              💡 Товары можно покупать бесконечно и в любом количестве
+            </p>
           </div>
         </div>
       </section>
 
       <section id="reviews" className="min-h-screen py-20 px-4 bg-gradient-to-b from-transparent via-secondary/10 to-transparent">
         <div className="container mx-auto">
-          <h2 className="text-3xl md:text-5xl text-center mb-12 text-primary">Отзывы игроков</h2>
+          <h2 className="text-3xl md:text-5xl text-center mb-12 text-primary">Отзывы и спонсоры</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map((review, idx) => (
               <Card
                 key={idx}
-                className="bg-card/80 border-primary/30 hover:border-primary transition-all hover:scale-105 animate-fade-in"
+                className={`${review.sponsor ? 'bg-gradient-to-br from-accent/30 to-secondary/30 border-accent' : 'bg-card/80 border-primary/30'} hover:border-primary transition-all hover:scale-105 animate-fade-in`}
                 style={{ animationDelay: `${idx * 0.05}s` }}
               >
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg text-primary">{review.name}</CardTitle>
+                    <div className="flex items-center gap-2">
+                      <CardTitle className="text-lg text-primary">{review.name}</CardTitle>
+                      {review.sponsor && (
+                        <Badge className="bg-accent text-accent-foreground">Спонсор</Badge>
+                      )}
+                    </div>
                     <div className="flex">
                       {[...Array(review.rating)].map((_, i) => (
                         <Icon key={i} name="Star" className="text-accent fill-accent" size={16} />
@@ -321,9 +570,10 @@ export default function Index() {
       <section id="rules" className="min-h-screen py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-3xl md:text-5xl text-center mb-12 text-primary">Правила сервера</h2>
-          <Card className="bg-card/80 border-2 border-primary/50 pixel-corners animate-scale-in">
+          
+          <Card className="bg-card/80 border-2 border-primary/50 pixel-corners animate-scale-in mb-8">
             <CardHeader>
-              <CardTitle className="text-2xl text-center">📜 Обязательно к прочтению</CardTitle>
+              <CardTitle className="text-2xl text-center">📜 Основные правила</CardTitle>
               <CardDescription className="text-center">
                 Соблюдение правил обеспечивает комфортную игру для всех
               </CardDescription>
@@ -343,6 +593,32 @@ export default function Index() {
                   </li>
                 ))}
               </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card/80 border-2 border-secondary/50 pixel-corners animate-scale-in">
+            <CardHeader>
+              <CardTitle className="text-2xl text-center">🛡️ Античит программы</CardTitle>
+              <CardDescription className="text-center">
+                Программы для проверки игроков на читы
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Accordion type="single" collapsible className="w-full">
+                {antiCheatPrograms.map((program, idx) => (
+                  <AccordionItem key={idx} value={`item-${idx}`}>
+                    <AccordionTrigger className="text-left">
+                      <span className="text-primary font-bold">{program.name}</span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <p className="text-muted-foreground">{program.desc}</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+              <p className="text-sm text-muted-foreground mt-4 p-3 bg-background/50 rounded border border-primary/20">
+                ⚠️ Важно: Проверяющие с рангом Method имеют возможность требовать установить другие программы.
+              </p>
             </CardContent>
           </Card>
         </div>
