@@ -72,4 +72,38 @@
       0 calc(100% - 8px)
     );
   }
+
+  .pixel-shadow {
+    box-shadow:
+      4px 4px 0 rgba(0, 255, 0, 0.3),
+      8px 8px 0 rgba(123, 44, 191, 0.2);
+  }
+
+  .minecraft-block {
+    position: relative;
+  }
+
+  .minecraft-block::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        45deg,
+        transparent 48%,
+        rgba(0, 255, 0, 0.1) 49%,
+        rgba(0, 255, 0, 0.1) 51%,
+        transparent 52%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 48%,
+        rgba(0, 255, 0, 0.1) 49%,
+        rgba(0, 255, 0, 0.1) 51%,
+        transparent 52%
+      );
+    background-size: 20px 20px;
+    pointer-events: none;
+    opacity: 0.3;
+  }
 }

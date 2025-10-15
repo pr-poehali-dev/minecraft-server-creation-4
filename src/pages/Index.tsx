@@ -229,13 +229,13 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#1a0f2e] to-[#0a0a0a] relative">
       <div 
-        className="fixed inset-0 z-0 opacity-30"
+        className="fixed inset-0 z-0 opacity-40"
         style={{
-          backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/ec925d24-f44b-4bb1-b3bf-afcc27ddc170.jpg)',
+          backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/f570c8ca-3676-4d9e-8b01-08bbe6176ab3.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(3px)'
+          filter: 'blur(1px) brightness(0.7)'
         }}
       />
       <div className="relative z-10">
@@ -328,8 +328,12 @@ export default function Index() {
         </div>
       </nav>
 
-      <section id="main" className="min-h-screen flex items-center justify-center pt-20 px-4">
-        <div className="text-center max-w-4xl animate-fade-in">
+      <section id="main" className="min-h-screen flex items-center justify-center pt-20 px-4 relative overflow-hidden">
+        <div className="absolute top-20 left-10 text-6xl animate-float opacity-50">⛏️</div>
+        <div className="absolute top-40 right-20 text-5xl animate-float opacity-50" style={{ animationDelay: '1s' }}>💎</div>
+        <div className="absolute bottom-20 left-1/4 text-7xl animate-float opacity-50" style={{ animationDelay: '2s' }}>🟩</div>
+        <div className="absolute bottom-40 right-1/3 text-5xl animate-float opacity-50" style={{ animationDelay: '1.5s' }}>⚔️</div>
+        <div className="text-center max-w-4xl animate-fade-in relative z-10">
           <div className="mb-8 animate-float">
             <h2 className="text-4xl md:text-6xl lg:text-7xl mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent leading-tight">
               ROOMTIMESERV
