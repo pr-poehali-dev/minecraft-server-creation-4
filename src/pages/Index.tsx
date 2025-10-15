@@ -329,6 +329,14 @@ export default function Index() {
       </nav>
 
       <section id="main" className="min-h-screen flex items-center justify-center pt-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none">
+          <div className="text-[10rem] font-bold leading-tight text-primary text-center" style={{ fontFamily: 'Press Start 2P' }}>
+            LOLOLOSHKA<br/>И FIXPLAY
+          </div>
+        </div>
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 text-[18rem] opacity-20 pointer-events-none select-none">
+          👀
+        </div>
         <div className="absolute top-20 left-10 text-6xl animate-float opacity-50">⛏️</div>
         <div className="absolute top-40 right-20 text-5xl animate-float opacity-50" style={{ animationDelay: '1s' }}>💎</div>
         <div className="absolute bottom-20 left-1/4 text-7xl animate-float opacity-50" style={{ animationDelay: '2s' }}>🟩</div>
