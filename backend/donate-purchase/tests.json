@@ -1,0 +1,28 @@
+{
+  "tests": [
+    {
+      "name": "Test purchase endpoint",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "nickname": "TestPlayer",
+        "items": [
+          {"name": "Барон", "price": 10, "type": "privilege"}
+        ],
+        "total_price": 10
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "server_ip": "RoomTimeServ.mc-join.me"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test OPTIONS for CORS",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}

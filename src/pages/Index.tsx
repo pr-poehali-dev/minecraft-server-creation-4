@@ -170,20 +170,42 @@ export default function Index() {
       return;
     }
 
-    const message = `🛒 Новая покупка!\n\nНикнейм: ${purchaseNickname}\nТовары:\n${cart.map(item => `- ${item.name} (${item.price}₽)`).join('\n')}\n\nИтого: ${getTotalPrice()}₽`;
-    
-    const telegramUrl = `https://t.me/KarpovST1M`;
-    window.open(telegramUrl, '_blank');
-    
-    toast({
-      title: '✅ Заказ оформлен!',
-      description: 'Свяжитесь с @KarpovST1M в Telegram для оплаты',
-    });
-    
-    console.log(message);
-    setCart([]);
-    setPurchaseNickname('');
-    setCartOpen(false);
+    try {
+      const response = await fetch('https://functions.poehali.dev/68a6dcd5-1846-4cd5-b898-1a2be8697e6a', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nickname: purchaseNickname,
+          items: cart,
+          total_price: getTotalPrice()
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const telegramMessage = encodeURIComponent(data.telegram_message);
+        const telegramUrl = `https://t.me/KarpovST1M?text=${telegramMessage}`;
+        window.open(telegramUrl, '_blank');
+        
+        toast({
+          title: '✅ Заказ оформлен!',
+          description: `Товары будут выданы на сервере ${data.server_ip}`,
+        });
+        
+        setCart([]);
+        setPurchaseNickname('');
+        setCartOpen(false);
+      }
+    } catch (error) {
+      toast({
+        title: '❌ Ошибка',
+        description: 'Не удалось оформить заказ',
+        variant: 'destructive'
+      });
+    }
   };
 
   const scrollToSection = (section: string) => {
@@ -193,7 +215,18 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#1a0f2e] to-[#0a0a0a]">
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#1a0f2e] to-[#0a0a0a] relative">
+      <div 
+        className="fixed inset-0 z-0 opacity-20"
+        style={{
+          backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/642c7259-1ac2-4afe-a8e4-f71e4ee13c13.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(4px)'
+        }}
+      />
+      <div className="relative z-10">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b-2 border-primary/30">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
@@ -644,6 +677,7 @@ export default function Index() {
           <p className="text-xs text-muted-foreground mt-4">© 2025 RoomTimeServ. Все права защищены.</p>
         </div>
       </footer>
+      </div>
     </div>
   );
 }
