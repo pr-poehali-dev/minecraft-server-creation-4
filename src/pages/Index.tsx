@@ -329,14 +329,24 @@ export default function Index() {
       </nav>
 
       <section id="main" className="min-h-screen flex items-center justify-center pt-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none">
-          <div className="text-[10rem] font-bold leading-tight text-primary text-center" style={{ fontFamily: 'Press Start 2P' }}>
-            LOLOLOSHKA<br/>И FIXPLAY
-          </div>
-        </div>
-        <div className="absolute right-10 top-1/2 -translate-y-1/2 text-[18rem] opacity-20 pointer-events-none select-none">
-          👀
-        </div>
+        <div 
+          className="absolute left-10 top-1/2 -translate-y-1/2 w-80 h-96 opacity-20 pointer-events-none select-none"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/fe2c644e-7c50-4df9-8255-d8c752d00c7a.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'brightness(0.7)'
+          }}
+        />
+        <div 
+          className="absolute right-10 top-1/2 -translate-y-1/2 w-96 h-[28rem] opacity-30 pointer-events-none select-none"
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/projects/d81d0294-984b-4c6d-9ba1-24a278b745a2/files/8dfb5e30-d579-4a46-9509-b727255a9167.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'brightness(0.6) contrast(1.2)'
+          }}
+        />
         <div className="absolute top-20 left-10 text-6xl animate-float opacity-50">⛏️</div>
         <div className="absolute top-40 right-20 text-5xl animate-float opacity-50" style={{ animationDelay: '1s' }}>💎</div>
         <div className="absolute bottom-20 left-1/4 text-7xl animate-float opacity-50" style={{ animationDelay: '2s' }}>🟩</div>
